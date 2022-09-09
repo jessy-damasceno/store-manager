@@ -6,6 +6,14 @@ async function findAll() {
   return result;
 }
 
+async function findById(productId) {
+  const [[result]] = await connection.execute('SELECT * FROM products WHERE id = ?',
+    [productId]);
+  
+  return result;
+}
+
 module.exports = {
   findAll,
+  findById,
 };
