@@ -46,7 +46,7 @@ describe("Verificando service Products", function () {
 
       const result = await productsService.getProductById(1);
 
-      expect(result).to.deep.equal(productsList[0]);
+      expect(result.message).to.deep.equal(productsList[0]);
     });
 
     it("Retorna uma mensagem de erro caso não existir produto com ID especificado", async function () {
