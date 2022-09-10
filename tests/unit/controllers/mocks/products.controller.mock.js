@@ -4,6 +4,12 @@ const productsList = [
   { id: 3, name: "Escudo do Capitão América" },
 ];
 
+const newProduct = { id: 4, name: 'Álbum de figurinhas da Copa' };
+
+const productsListWithNewProduct = [...productsList, newProduct];
+
 module.exports = {
   productsList,
+  newProduct,
+  productsListWithNewProduct,
 };
