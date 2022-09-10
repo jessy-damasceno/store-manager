@@ -58,4 +58,52 @@ describe("Verificando service Products", function () {
       expect(result.message).to.deep.equal("Product not found");
     });
   });
+
+  describe("Cadastrando um produto", function () {
+    beforeEach(function () {
+      sinon.stub(productsModel, "insert").resolves(1);
+    });
+
+    afterEach(function () {
+      sinon.restore();
+    });
+
+    const VALID_NAME = "Álbum de figurinhas da Copa";
+
+    const INVALID_MIN_CHARS_EXPECTED = {
+      type: "INVALID_FIELD",
+      message: '"name" length must be at least 5 characters long',
+    };
+
+    const NAME_REQUIRED_EXPECTED = {
+      type: "FIELD_REQUIRED",
+      message: '"name" is required',
+    };
+
+    const INSERTED_PRODUCT = {
+      type: null,
+      message: { id: 1, name: VALID_NAME },
+    };
+
+    it("Retorna um erro ao receber um produto menor do que 5 caracteres", async function () {
+      const result = await productsService.createProduct("suco");
+
+      expect(result instanceof Object).to.equal(true);
+      expect(result).to.deep.equal(INVALID_MIN_CHARS_EXPECTED);
+    });
+
+    it("Retorna um erro ao não receber o nome de um produto", async function () {
+      const result = await productsService.createProduct();
+
+      expect(result instanceof Object).to.equal(true);
+      expect(result).to.deep.equal(NAME_REQUIRED_EXPECTED);
+    });
+
+    it("Cadastrando um novo produto com sucesso", async function () {
+      const result = await productsService.createProduct(VALID_NAME);
+
+      expect(result instanceof Object).to.equal(true);
+      expect(result).to.deep.equal(INSERTED_PRODUCT);
+    });
+  });
 });
