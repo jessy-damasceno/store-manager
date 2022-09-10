@@ -42,4 +42,24 @@ describe("Testes de unidade do model de Produtos", function () {
       expect(result).to.be.deep.equal({ id: 1, name: "Martelo de Thor" });
     });
   });
+
+  describe("Cadastra um novo produto", function () {
+    before(async function () {
+      sinon.stub(connection, "execute").resolves([{ insertId: 1}]);
+    });
+
+    after(async function () {
+      connection.execute.restore();
+    });
+
+    const expected = 1;
+
+    const payload = "Álbum de figurinhas da Copa";
+
+    it("com sucesso", async function () {
+      const response = await productsModel.insert(payload);
+
+      expect(response).to.equal(expected);
+    });
+  });
 });
