@@ -9,7 +9,10 @@ async function listAll() {
 async function getProductById(productId) {
   const product = await productsModel.findById(productId);
 
-  return product;
+  if (product) {
+    return product;
+  }
+  return { type: 'NOT_FOUND', message: 'Product not found' };
 }
 
 module.exports = {
