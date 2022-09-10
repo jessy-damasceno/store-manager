@@ -5,7 +5,7 @@ const validateNewProduct = (name) => {
 
   if (error) {
     return {
-      type: error.details[0].message,
+      type: error.details[0].type === 'string.min' ? 'INVALID_FIELD' : 'FIELD_REQUIRED',
       message: error.details[0].message,
     }; 
   }
