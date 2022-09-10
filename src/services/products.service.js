@@ -12,7 +12,7 @@ async function getProductById(productId) {
   if (product) {
     return { type: null, message: product };
   }
-  return { type: 'NOT_FOUND', message: 'Product not found' };
+  return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 }
 
 module.exports = {
