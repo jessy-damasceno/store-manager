@@ -19,7 +19,7 @@ async function insertSaleProducts(payload) {
 
   const [{ affectedRows }] = await connection.execute(query, values);
 
-  return affectedRows;
+  return { saleId, affectedRows };
 }
 
 module.exports = {

@@ -6,7 +6,7 @@ const salesModel = require("../../../src/models/sales.model");
 
 const { salesProducts } = require("./mocks/sales.model.mock");
 
-describe("Verificando Model Sales", function () {
+describe.only("Verificando Model Sales", function () {
   describe("Cadastrando uma nova venda (tabela sales)", function () {
     afterEach(async function () {
       sinon.restore();
@@ -20,10 +20,12 @@ describe("Verificando Model Sales", function () {
     });
 
     it("Testando se a função insertSaleProducts funciona corretamente", async function () {
-      sinon.stub(connection, "execute").resolves([{ affectedRows: 2 }]);
+      sinon.stub(connection, "execute")
+        .onFirstCall().resolves([{ insertId: 1 }])
+        .onSecondCall().resolves([{ affectedRows: 2 }]);
       const result = await salesModel.insertSaleProducts(salesProducts);
 
-      expect(result).to.equal(2);
+      expect(result).to.deep.equal({ saleId: 1, affectedRows: 2 });
     });
   });
 });
