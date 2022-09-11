@@ -4,19 +4,19 @@ const newSaleProducts = [
 ];
 
 const newSaleResponse = {
-  id: 1,
-  itemsSold: [
-    { productId: 1, quantity: 1 },
-    { productId: 2, quantity: 5 },
-  ],
+  type: null,
+  message: {
+    id: 1,
+    itemsSold: [
+      { productId: 1, quantity: 1 },
+      { productId: 2, quantity: 5 },
+    ],
+  },
 };
 
 const missingProductId = [{ quantity: 1 }];
 
-const missingProductId2 = [
-  { productId: 1, quantity: 1 },
-  { quantity: 5 },
-];
+const missingProductId2 = [{ productId: 1, quantity: 1 }, { quantity: 5 }];
 
 const invalidProductId = [
   { productId: 9999, quantity: 1 },
