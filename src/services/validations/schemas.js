@@ -8,7 +8,7 @@ const addProductSchema = Joi.object({
 });
 
 const newSaleSchema = Joi.object({
-  productId: Joi.number.required().messages({
+  productId: Joi.number().required().messages({
     'number.empty': '"productId" is required',
   }),
   quantity: Joi.number().greater(0).required().messages({
