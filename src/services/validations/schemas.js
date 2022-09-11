@@ -7,7 +7,7 @@ const addProductSchema = Joi.object({
   }),
 });
 
-const newSaleSchema = Joi.object({
+const newSaleSchema = Joi.array().items(Joi.object({
   productId: Joi.number().required().messages({
     'number.empty': '"productId" is required',
   }),
@@ -15,7 +15,7 @@ const newSaleSchema = Joi.object({
     'number.greater': '"quantity" must be greater than or equal to 1',
     'number.empty': '"quantity" is required',
   }),
-});
+}));
 
 module.exports = {
   addProductSchema,
