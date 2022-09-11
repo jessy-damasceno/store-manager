@@ -45,7 +45,7 @@ describe("Testes de unidade do model de Produtos", function () {
 
   describe("Cadastra um novo produto", function () {
     before(async function () {
-      sinon.stub(connection, "execute").resolves([{ insertId: 1}]);
+      sinon.stub(connection, "execute").resolves([{ insertId: 1 }]);
     });
 
     after(async function () {
