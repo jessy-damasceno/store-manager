@@ -6,7 +6,7 @@ const salesModel = require("../../../src/models/sales.model");
 
 const { salesProducts } = require("./mocks/sales.model.mock");
 
-describe.only("Verificando Model Sales", function () {
+describe("Verificando Model Sales", function () {
   describe("Cadastrando uma nova venda (tabela sales)", function () {
     afterEach(async function () {
       sinon.restore();
