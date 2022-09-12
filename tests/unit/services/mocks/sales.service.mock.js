@@ -42,6 +42,11 @@ const invalidQuantity2 = [
   { productId: 2, quantity: -1 },
 ];
 
+const PRODUCT_ID_REQUIRED_ERROR_MESSAGE = {
+  type: "FIELD_REQUIRED",
+  message: '"productId" is required',
+};
+
 module.exports = {
   newSaleProducts,
   newSaleResponse,
@@ -53,4 +58,5 @@ module.exports = {
   missingQuantity2,
   invalidQuantity1,
   invalidQuantity2,
+  PRODUCT_ID_REQUIRED_ERROR_MESSAGE,
 };

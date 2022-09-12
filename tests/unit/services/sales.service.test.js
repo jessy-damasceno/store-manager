@@ -15,6 +15,7 @@ const {
   missingQuantity2,
   invalidQuantity1,
   invalidQuantity2,
+  PRODUCT_ID_REQUIRED_ERROR_MESSAGE,
 } = require("./mocks/sales.service.mock");
 
 describe("Verificando service Sales", function () {
@@ -32,6 +33,13 @@ describe("Verificando service Sales", function () {
       console.log(result);
       expect(result instanceof Object).to.equal(true);
       expect(result).to.deep.equal(newSaleResponse);
+    });
+
+    it.only("Retorna um erro se productId não for passado", async function () {
+      const result = await salesService.createSale(missingProductId);
+      console.log(result);
+      expect(result instanceof Object).to.equal(true);
+      expect(result).to.deep.equal(PRODUCT_ID_REQUIRED_ERROR_MESSAGE);
     });
   });
 });
