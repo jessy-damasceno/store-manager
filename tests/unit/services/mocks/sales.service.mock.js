@@ -57,6 +57,11 @@ const INVALID_QUANTITY_ERROR_MESSAGE = {
   message: '"quantity" must be greater than or equal to 1',
 };
 
+const INVALID_PRODUCT_ID_ERROR_MESSAGE = {
+  type: "PRODUCT_NOT_FOUND",
+  message: "Product not found",
+};
+
 module.exports = {
   newSaleProducts,
   newSaleResponse,
@@ -71,4 +76,5 @@ module.exports = {
   PRODUCT_ID_REQUIRED_ERROR_MESSAGE,
   QUANTITY_REQUIRED_ERROR_MESSAGE,
   INVALID_QUANTITY_ERROR_MESSAGE,
+  INVALID_PRODUCT_ID_ERROR_MESSAGE,
 };
