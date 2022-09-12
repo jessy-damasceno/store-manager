@@ -17,6 +17,7 @@ const {
   invalidQuantity2,
   PRODUCT_ID_REQUIRED_ERROR_MESSAGE,
   QUANTITY_REQUIRED_ERROR_MESSAGE,
+  INVALID_QUANTITY_ERROR_MESSAGE,
 } = require("./mocks/sales.service.mock");
 
 describe("Verificando service Sales", function () {
@@ -50,18 +51,32 @@ describe("Verificando service Sales", function () {
       expect(result).to.deep.equal(PRODUCT_ID_REQUIRED_ERROR_MESSAGE);
     });
 
-    it.only("Retorna um erro se quantity não for passado", async function () {
+    it("Retorna um erro se quantity não for passado", async function () {
       const result = await salesService.createSale(missingQuantity);
 
       expect(result instanceof Object).to.equal(true);
       expect(result).to.deep.equal(QUANTITY_REQUIRED_ERROR_MESSAGE);
     });
 
-    it.only("Retorna um erro se quantity não for passado - case 2", async function () {
+    it("Retorna um erro se quantity não for passado - case 2", async function () {
       const result = await salesService.createSale(missingQuantity2);
 
       expect(result instanceof Object).to.equal(true);
       expect(result).to.deep.equal(QUANTITY_REQUIRED_ERROR_MESSAGE);
+    });
+
+    it.only("Retorna um erro se quantity tiver valores inválidos", async function () {
+      const result = await salesService.createSale(invalidQuantity1);
+
+      expect(result instanceof Object).to.equal(true);
+      expect(result).to.deep.equal(INVALID_QUANTITY_ERROR_MESSAGE);
+    });
+
+    it.only("Retorna um erro se quantity tiver valores inválidos - case 2", async function () {
+      const result = await salesService.createSale(invalidQuantity2);
+
+      expect(result instanceof Object).to.equal(true);
+      expect(result).to.deep.equal(INVALID_QUANTITY_ERROR_MESSAGE);
     });
   });
 });

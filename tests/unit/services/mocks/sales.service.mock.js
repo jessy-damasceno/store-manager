@@ -52,6 +52,11 @@ const QUANTITY_REQUIRED_ERROR_MESSAGE = {
   message: '"quantity" is required',
 };
 
+const INVALID_QUANTITY_ERROR_MESSAGE = {
+  type: "INVALID_FIELD",
+  message: '"quantity" must be greater than or equal to 1',
+};
+
 module.exports = {
   newSaleProducts,
   newSaleResponse,
@@ -65,4 +70,5 @@ module.exports = {
   invalidQuantity2,
   PRODUCT_ID_REQUIRED_ERROR_MESSAGE,
   QUANTITY_REQUIRED_ERROR_MESSAGE,
+  INVALID_QUANTITY_ERROR_MESSAGE,
 };
