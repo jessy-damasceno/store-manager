@@ -9,6 +9,7 @@ const {
   saleCreateResponse,
   validBodyRequest,
   salesList,
+  saleById,
 } = require("./mocks/sales.controller.mock");
 
 describe("Verificando controller Sales", function () {
@@ -85,4 +86,44 @@ describe("Verificando controller Sales", function () {
       expect(res.json.calledWith(salesList)).to.be.true;
     });
   });
+
+describe("Listando uma venda", function () {
+  afterEach(function () {
+    sinon.restore();
+  });
+
+  it("é chamado o status com o código 200 e uma única venda", async function () {
+    sinon
+      .stub(salesService, "getSaleById")
+      .resolves({ type: null, message: saleById });
+
+    const req = { params: { id: 1 } };
+    const res = {};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    await salesController.getOneSale(req, res);
+
+    expect(res.status.calledWith(200)).to.be.true;
+    expect(res.json.calledWith(saleById)).to.be.true;
+  });
+
+  it("é chamado o status com o código 404", async function () {
+    sinon
+      .stub(salesService, "getSaleById")
+      .resolves({ type: "SALE_NOT_FOUND", message: "Sale not found" });
+
+    const req = { params: { id: 99999 } };
+    const res = {};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    await salesController.getOneSale(req, res);
+
+    expect(res.status.calledWith(404)).to.be.true;
+    expect(res.json.calledWith({ message: "Sale not found" })).to.be.true;
+  });
+});
 });
