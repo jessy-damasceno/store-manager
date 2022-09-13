@@ -22,7 +22,22 @@ async function insertSaleProducts(payload) {
   return { saleId, affectedRows };
 }
 
+async function getSales() {
+  const [result] = await connection.execute(
+    `SELECT 
+      sp.sale_id AS saleId,
+      sa.date,
+      sp.product_id AS productId,
+      sp.quantity
+    FROM sales_products AS sp
+    JOIN sales AS sa ON sp.sale_id = sa.id
+    ORDER BY saleId, productId`,
+  );
+  return result;
+}
+
 module.exports = {
   newSale,
   insertSaleProducts,
+  getSales,
 };
