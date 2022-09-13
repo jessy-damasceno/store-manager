@@ -4,7 +4,11 @@ const sinon = require("sinon");
 const connection = require("../../../src/models/connection");
 const salesModel = require("../../../src/models/sales.model");
 
-const { salesProducts, allSales } = require("./mocks/sales.model.mock");
+const {
+  salesProducts,
+  allSales,
+  saleById,
+} = require("./mocks/sales.model.mock");
 
 describe("Verificando Model Sales", function () {
   describe("Cadastrando uma nova venda (tabela sales)", function () {
@@ -42,6 +46,19 @@ describe("Verificando Model Sales", function () {
       const result = await salesModel.getSales();
 
       expect(result).to.be.deep.equal(allSales);
+    });
+  });
+
+  describe("Listando uma venda", function () {
+    afterEach(async function () {
+      sinon.restore();
+    });
+
+    it("Testando o retorno da função getSaleById", async function () {
+      sinon.stub(connection, "execute").resolves([saleById]);
+      const result = await salesModel.getSaleById(1);
+
+      expect(result).to.be.deep.equal(saleById);
     });
   });
 });
