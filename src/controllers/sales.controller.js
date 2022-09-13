@@ -16,7 +16,18 @@ const listAllSales = async (_req, res) => {
   return res.status(200).json(products);
 };
 
+const getOneSale = async (req, res) => {
+  const { id } = req.params;
+  const { type, message } = await salesService.getSaleById(id);
+
+  if (type) {
+    return res.status(mapError(type)).json({ message });
+  }
+  return res.status(200).json(message);
+};
+
 module.exports = {
   createNewSale,
   listAllSales,
+  getOneSale,
 };
