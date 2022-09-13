@@ -32,6 +32,16 @@ async function getSales() {
     FROM sales_products AS sp
     JOIN sales AS sa ON sp.sale_id = sa.id
     ORDER BY saleId, productId`,
+);
+  return result;
+}
+
+async function getSaleById(saleId) {
+  const [result] = await connection.execute(
+    `SELECT date, product_id AS productId, quantity FROM sales_products
+    JOIN sales ON id = sales_products.sale_id
+    WHERE id = ?
+    ORDER BY productId`, [saleId],
   );
   return result;
 }
@@ -40,4 +50,5 @@ module.exports = {
   newSale,
   insertSaleProducts,
   getSales,
+  getSaleById,
 };
