@@ -62,4 +62,31 @@ describe("Testes de unidade do model de Produtos", function () {
       expect(response).to.equal(expected);
     });
   });
+
+  describe.only("Atualiza um produto", function () {
+    const payload = {
+      id: 5,
+      name: "Álbum de figurinhas da Copa",
+    };
+
+    before(async function () {
+      sinon
+        .stub(connection, "execute")
+        .onCall(0)
+        .resolves([{ affectedRows: 1 }])
+        .onCall(1)
+        .resolves([[payload]]);
+    });
+
+    after(async function () {
+      connection.execute.restore();
+    });
+
+    it("com sucesso", async function () {
+      const response = await productsModel.update(payload);
+
+      expect(response.affectedRows).to.equal(1);
+      expect(response.result).to.deep.equal(payload);
+    });
+  });
 });
