@@ -20,6 +20,7 @@ const {
   INVALID_QUANTITY_ERROR_MESSAGE,
   INVALID_PRODUCT_ID_ERROR_MESSAGE,
   allSales,
+  saleById,
 } = require("./mocks/sales.service.mock");
 
 describe("Verificando service Sales", function () {
@@ -115,6 +116,29 @@ describe("Verificando service Sales", function () {
       const result = await salesService.listAll();
 
       expect(result).to.deep.equal(allSales);
+    });
+  });
+
+  describe("Listando uma única venda", function () {
+    afterEach(function () {
+      sinon.restore();
+    });
+
+    it("Retorna uma venda com sucesso", async function () {
+      sinon.stub(salesModel, "getSaleById").resolves(saleById);
+
+      const result = await salesService.getSaleById(1);
+
+      expect(result.message).to.deep.equal(saleById);
+    });
+
+    it("Retorna uma mensagem de erro caso não existir venda com ID especificado", async function () {
+      const INVALID_ID = 9999;
+      sinon.stub(salesModel, "getSaleById").resolves(saleById[INVALID_ID]);
+
+      const result = await salesService.getSaleById(INVALID_ID);
+
+      expect(result.message).to.deep.equal("Sale not found");
     });
   });
 });
