@@ -37,7 +37,17 @@ async function listAll() {
   return productsList;
 }
 
+async function getSaleById(saleId) {
+  const product = await salesModel.getSaleById(saleId);
+
+  if (product) {
+    return { type: null, message: product };
+  }
+  return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+}
+
 module.exports = {
   createSale,
   listAll,
+  getSaleById,
 };
