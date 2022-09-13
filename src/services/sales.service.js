@@ -38,10 +38,10 @@ async function listAll() {
 }
 
 async function getSaleById(saleId) {
-  const product = await salesModel.getSaleById(saleId);
+  const sale = await salesModel.getSaleById(saleId);
 
-  if (product) {
-    return { type: null, message: product };
+  if (sale.length > 0) {
+    return { type: null, message: sale };
   }
   return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
 }

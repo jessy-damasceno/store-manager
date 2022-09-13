@@ -134,7 +134,7 @@ describe("Verificando service Sales", function () {
 
     it("Retorna uma mensagem de erro caso não existir venda com ID especificado", async function () {
       const INVALID_ID = 9999;
-      sinon.stub(salesModel, "getSaleById").resolves(saleById[INVALID_ID]);
+      sinon.stub(salesModel, "getSaleById").resolves([]);
 
       const result = await salesService.getSaleById(INVALID_ID);
 
