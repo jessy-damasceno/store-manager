@@ -8,6 +8,7 @@ const salesService = require("../../../src/services/sales.service");
 const {
   saleCreateResponse,
   validBodyRequest,
+  salesList,
 } = require("./mocks/sales.controller.mock");
 
 describe("Verificando controller Sales", function () {
@@ -48,6 +49,40 @@ describe("Verificando controller Sales", function () {
 
       expect(res.status.calledWith(404)).to.be.true;
       expect(res.json.calledWith({ message: "Product not found" })).to.be.true;
+    });
+  });
+
+  describe("Listando todas as vendas", function () {
+    beforeEach(function () {
+      sinon.stub(salesService, "listAll").resolves(salesList);
+    });
+
+    afterEach(function () {
+      sinon.restore();
+    });
+
+    it("é chamado o status com o código 200", async function () {
+      const req = {};
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      await salesController.listAllSales(req, res);
+
+      expect(res.status.calledWith(200)).to.be.true;
+    });
+
+    it("é chamado o json com a lista de vendas", async function () {
+      const req = {};
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      await salesController.listAllSales(req, res);
+
+      expect(res.json.calledWith(salesList)).to.be.true;
     });
   });
 });
