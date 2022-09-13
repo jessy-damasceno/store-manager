@@ -62,6 +62,21 @@ const INVALID_PRODUCT_ID_ERROR_MESSAGE = {
   message: "Product not found",
 };
 
+const allSales = [
+  {
+    saleId: 1,
+    date: "2021-09-09T04:54:29.000Z",
+    productId: 1,
+    quantity: 2,
+  },
+  {
+    saleId: 1,
+    date: "2021-09-09T04:54:54.000Z",
+    productId: 2,
+    quantity: 2,
+  },
+];
+
 module.exports = {
   newSaleProducts,
   newSaleResponse,
@@ -77,4 +92,5 @@ module.exports = {
   QUANTITY_REQUIRED_ERROR_MESSAGE,
   INVALID_QUANTITY_ERROR_MESSAGE,
   INVALID_PRODUCT_ID_ERROR_MESSAGE,
+  allSales,
 };

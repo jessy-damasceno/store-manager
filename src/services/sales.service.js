@@ -31,6 +31,13 @@ const createSale = async (payload) => {
   };
 };
 
+async function listAll() {
+  const productsList = await salesModel.getSales();
+
+  return productsList;
+}
+
 module.exports = {
   createSale,
+  listAll,
 };

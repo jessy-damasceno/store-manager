@@ -19,6 +19,7 @@ const {
   QUANTITY_REQUIRED_ERROR_MESSAGE,
   INVALID_QUANTITY_ERROR_MESSAGE,
   INVALID_PRODUCT_ID_ERROR_MESSAGE,
+  allSales,
 } = require("./mocks/sales.service.mock");
 
 describe("Verificando service Sales", function () {
@@ -92,6 +93,28 @@ describe("Verificando service Sales", function () {
 
       expect(result instanceof Object).to.equal(true);
       expect(result).to.deep.equal(INVALID_PRODUCT_ID_ERROR_MESSAGE);
+    });
+  });
+
+  describe("Listando todas as vendas", function () {
+    beforeEach(function () {
+      sinon.stub(salesModel, "getSales").resolves(allSales);
+    });
+
+    afterEach(function () {
+      sinon.restore();
+    });
+
+    it("A lista de vendas é um array", async function () {
+      const result = await salesService.listAll();
+
+      expect(result instanceof Array).to.equal(true);
+    });
+
+    it("Retorna a lista de vendas com sucesso", async function () {
+      const result = await salesService.listAll();
+
+      expect(result).to.deep.equal(allSales);
     });
   });
 });
