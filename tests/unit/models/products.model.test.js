@@ -74,8 +74,6 @@ describe("Testes de unidade do model de Produtos", function () {
         .stub(connection, "execute")
         .onCall(0)
         .resolves([{ affectedRows: 1 }])
-        .onCall(1)
-        .resolves([[payload]]);
     });
 
     after(async function () {
@@ -86,7 +84,6 @@ describe("Testes de unidade do model de Produtos", function () {
       const response = await productsModel.update(payload);
 
       expect(response.affectedRows).to.equal(1);
-      expect(response.result).to.deep.equal(payload);
     });
   });
 });
