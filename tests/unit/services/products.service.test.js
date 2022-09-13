@@ -5,6 +5,23 @@ const productsModel = require("../../../src/models/products.model");
 const productsService = require("../../../src/services/products.service");
 const { productsList } = require("./mocks/products.service.mock");
 
+const VALID_NAME = "Álbum de figurinhas da Copa";
+
+const INVALID_MIN_CHARS_EXPECTED = {
+  type: "INVALID_FIELD",
+  message: '"name" length must be at least 5 characters long',
+};
+
+const NAME_REQUIRED_EXPECTED = {
+  type: "FIELD_REQUIRED",
+  message: '"name" is required',
+};
+
+const INSERTED_PRODUCT = {
+  type: null,
+  message: { id: 1, name: VALID_NAME },
+};
+
 describe("Verificando service Products", function () {
   describe("Listando todos os produtos", function () {
     beforeEach(function () {
@@ -68,23 +85,6 @@ describe("Verificando service Products", function () {
       sinon.restore();
     });
 
-    const VALID_NAME = "Álbum de figurinhas da Copa";
-
-    const INVALID_MIN_CHARS_EXPECTED = {
-      type: "INVALID_FIELD",
-      message: '"name" length must be at least 5 characters long',
-    };
-
-    const NAME_REQUIRED_EXPECTED = {
-      type: "FIELD_REQUIRED",
-      message: '"name" is required',
-    };
-
-    const INSERTED_PRODUCT = {
-      type: null,
-      message: { id: 1, name: VALID_NAME },
-    };
-
     it("Retorna um erro ao receber um produto menor do que 5 caracteres", async function () {
       const result = await productsService.createProduct("suco");
 
@@ -104,6 +104,48 @@ describe("Verificando service Products", function () {
 
       expect(result instanceof Object).to.equal(true);
       expect(result).to.deep.equal(INSERTED_PRODUCT);
+    });
+  });
+
+  describe("Atualizando um produto", function () {
+    const payload = {
+      id: 5,
+      name: "Álbum de figurinhas da Copa",
+    };
+
+    afterEach(function () {
+      sinon.restore();
+    });
+
+    it("com sucesso", async function () {
+      sinon.stub(productsModel, "findById").resolves({ type: null });
+      sinon.stub(productsModel, "update").resolves({ result: payload });
+
+      const result = await productsService.updateProduct(payload);
+
+      expect(result instanceof Object).to.equal(true);
+      expect(result).to.deep.equal({ type: null, message: payload });
+    });
+
+    it("retorna erro se produto não existir", async function () {
+      sinon.stub(productsModel, "findById").resolves(null);
+      sinon.stub(productsModel, "update").resolves({ result: payload });
+
+      const result = await productsService.updateProduct(payload);
+
+      expect(result).to.deep.equal({
+        type: "PRODUCT_NOT_FOUND",
+        message: "Product not found",
+      });
+    });
+
+    it("retorna erro se não for enviado nome do produto no corpo da requisição", async function () {
+      sinon.stub(productsModel, "findById").resolves({ type: null });
+      sinon.stub(productsModel, "update").resolves({ result: payload });
+
+      const result = await productsService.updateProduct({ id: 5 });
+
+      expect(result).to.deep.equal(NAME_REQUIRED_EXPECTED);
     });
   });
 });

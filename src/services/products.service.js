@@ -31,8 +31,26 @@ async function createProduct(productName) {
   };
 }
 
+async function updateProduct({ id, name }) {
+  const response = await getProductById(id);
+  if (response.type) {
+    return response;
+  }
+
+  const error = validations.validateNewProduct(name);
+
+  if (error.type) {
+    return error;
+  }
+
+  const { result } = await productsModel.update({ name, id });
+
+  return { type: null, message: result }; 
+}
+
 module.exports = {
   listAll,
   getProductById,
   createProduct,
+  updateProduct,
 };
