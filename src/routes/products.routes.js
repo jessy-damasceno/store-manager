@@ -14,14 +14,8 @@ productsRouter.route('/:id')
   .put(updateProduct)
   .delete(deleteProduct);
 
-// productsRouter.get('/:id', getOneProduct);
-// productsRouter.put('/:id', updateProduct);
-
 productsRouter.route('/')
   .get(listAllProducts)
   .post(createProduct);
-
-// productsRouter.get('/', listAllProducts);
-// productsRouter.post('/', createProduct);
 
 module.exports = productsRouter;

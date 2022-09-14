@@ -3,13 +3,17 @@ const {
   createNewSale,
   listAllSales,
   getOneSale,
+  deleteSale,
 } = require('../controllers/sales.controller');
 
 const salesRouter = Router();
 
-salesRouter.get('/:id', getOneSale);
-salesRouter.get('/', listAllSales);
+salesRouter.route('/:id')
+  .get(getOneSale)
+  .delete(deleteSale);
 
-salesRouter.post('/', createNewSale);
+salesRouter.route('/')
+  .get(listAllSales)
+  .post(createNewSale);
 
 module.exports = salesRouter;
