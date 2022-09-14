@@ -61,4 +61,20 @@ describe("Verificando Model Sales", function () {
       expect(result).to.be.deep.equal(saleById);
     });
   });
+
+  describe("Remove uma venda", function () {
+    before(async function () {
+      sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+    });
+
+    after(async function () {
+      connection.execute.restore();
+    });
+
+    it("com sucesso", async function () {
+      const response = await salesModel.deleteSale(2);
+
+      expect(response.affectedRows).to.equal(1);
+    });
+  });
 });

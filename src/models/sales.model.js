@@ -46,9 +46,15 @@ async function getSaleById(saleId) {
   return result;
 }
 
+async function deleteSale(saleId) {
+    const [result] = await connection.execute('DELETE FROM sales WHERE id = ?', [saleId]);
+  return result;
+}
+
 module.exports = {
   newSale,
   insertSaleProducts,
   getSales,
   getSaleById,
+  deleteSale,
 };
