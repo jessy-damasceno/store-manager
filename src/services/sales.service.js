@@ -46,8 +46,21 @@ async function getSaleById(saleId) {
   return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
 }
 
+async function deleteSale(saleId) {
+  const error = await getSaleById(saleId);
+
+  if (error.type) {
+    return error;
+  }
+
+  await salesModel.deleteSale(saleId);
+
+  return { type: null, message: null };
+}
+
 module.exports = {
   createSale,
   listAll,
   getSaleById,
+  deleteSale,
 };

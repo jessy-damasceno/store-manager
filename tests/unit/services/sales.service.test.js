@@ -141,4 +141,32 @@ describe("Verificando service Sales", function () {
       expect(result.message).to.deep.equal("Sale not found");
     });
   });
+
+  describe.only("Removendo uma venda do bando de dados", function () {
+    afterEach(function () {
+      sinon.restore();
+    });
+
+    it("com sucesso", async function () {
+      sinon.stub(salesModel, "getSaleById").resolves([allSales[0]]);
+      sinon
+        .stub(salesModel, "deleteSale")
+        .resolves([{ affectedRows: 1 }]);
+
+      const result = await salesService.deleteSale(1);
+
+      expect(result).to.deep.equal({ type: null, message: null });
+    });
+
+    it("retorna erro se a venda não existir", async function () {
+      sinon.stub(salesModel, "getSaleById").resolves([]);
+
+      const result = await salesService.deleteSale(1);
+
+      expect(result).to.deep.equal({
+        type: "SALE_NOT_FOUND",
+        message: "Sale not found",
+      });
+    });
+  });
 });
