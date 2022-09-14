@@ -140,43 +140,63 @@ describe("Verificando controller Products", function () {
     });
   });
 
-describe("Atualizando um produto", function () {
-  afterEach(function () {
-    sinon.restore();
+  describe("Atualizando um produto", function () {
+    afterEach(function () {
+      sinon.restore();
+    });
+
+    it("é chamado o status com o código 200 e retorna o objeto atualizado", async function () {
+      sinon
+        .stub(productsService, "updateProduct")
+        .resolves({ type: null, message: newProduct });
+
+      const req = {
+        body: { name: "Álbum de figurinhas da Copa" },
+        params: { id: 4 },
+      };
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      await productsController.updateProduct(req, res);
+
+      expect(res.status.calledWith(200)).to.be.true;
+      expect(res.json.calledWith(newProduct)).to.be.true;
+    });
+
+    it("é chamado o status com o código 400 e retorna a mensagem de erro se nome do produto não especificado", async function () {
+      sinon
+        .stub(productsService, "updateProduct")
+        .resolves({ type: "FIELD_REQUIRED", message: '"name" is required' });
+
+      const req = { body: { name: "" }, params: { id: 1 } };
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      await productsController.updateProduct(req, res);
+
+      expect(res.status.calledWith(400)).to.be.true;
+      expect(res.json.calledWith({ message: '"name" is required' })).to.be.true;
+    });
+
+    it("é chamado o status com o código 400 e retorna a mensagem de erro se nome do produto não especificado", async function () {
+      sinon
+        .stub(productsService, "updateProduct")
+        .resolves({ type: "PRODUCT_NOT_FOUND", message: "Product not found" });
+
+      const req = { body: { name: "Piscina de bolinhas do Aquaman" }, params: { id: 999 } };
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      await productsController.updateProduct(req, res);
+
+      expect(res.status.calledWith(404)).to.be.true;
+      expect(res.json.calledWith({ message: "Product not found" })).to.be.true;
+    });
   });
-
-  it("é chamado o status com o código 200 e retorna o objeto atualizado", async function () {
-    sinon
-      .stub(productsService, "updateProduct")
-      .resolves({ type: null, message: newProduct });
-
-    const req = { body: { name: "Álbum de figurinhas da Copa" }, params: { id: 4 } };
-    const res = {};
-
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
-
-    await productsController.updateProduct(req, res);
-
-    expect(res.status.calledWith(200)).to.be.true;
-    expect(res.json.calledWith(newProduct)).to.be.true;
-  });
-
-  it("é chamado o status com o código 400 e retorna a mensagem de erro se nome do produto não especificado", async function () {
-    sinon
-      .stub(productsService, "updateProduct")
-      .resolves({ type: "FIELD_REQUIRED", message: '"name" is required' });
-
-    const req = { body: { name: "" }, params: { id: 1 } };
-    const res = {};
-
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
-
-    await productsController.createProduct(req, res);
-
-    expect(res.status.calledWith(400)).to.be.true;
-    expect(res.json.calledWith({ message: '"name" is required' })).to.be.true;
-  });
-});
 });
