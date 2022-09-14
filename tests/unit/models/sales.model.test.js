@@ -77,4 +77,26 @@ describe("Verificando Model Sales", function () {
       expect(response.affectedRows).to.equal(1);
     });
   });
+
+  describe("Atualiza uma venda", function () {
+    const payload = {
+      saleId: 1,
+      productId: 1,
+      quantity: 1,
+    };
+
+    before(async function () {
+      sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+    });
+
+    after(async function () {
+      connection.execute.restore();
+    });
+
+    it("com sucesso", async function () {
+      const response = await salesModel.update(payload);
+
+      expect(response.affectedRows).to.equal(1);
+    });
+  });
 });
