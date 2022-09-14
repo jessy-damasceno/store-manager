@@ -89,4 +89,20 @@ describe("Testes de unidade do model de Produtos", function () {
       expect(response.result).to.deep.equal(payload);
     });
   });
+
+  describe("Remove um produto", function () {
+    before(async function () {
+      sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+    });
+
+    after(async function () {
+      connection.execute.restore();
+    });
+
+    it("com sucesso", async function () {
+      const response = await productsModel.deleteProduct(2);
+
+      expect(response.affectedRows).to.equal(1);
+    });
+  });
 });
