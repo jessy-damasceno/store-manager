@@ -58,9 +58,31 @@ async function deleteSale(saleId) {
   return { type: null, message: null };
 }
 
+async function updateSale(saleId, payload) {
+  const error = validations.validateNewSale(payload);
+  if (error.type) {
+    return error;
+  }
+
+  const isProducts = await isProductsVerify(payload);
+  if (!isProducts) {
+    return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  }
+
+  const notSale = await getSaleById(saleId);
+  if (notSale.type) {
+    return notSale;
+  }
+
+  await Promise.all(payload.map((e) => salesModel.update({ saleId, ...e })));
+
+  return { type: null, message: { saleId, itemsUpdated: payload } };
+}
+
 module.exports = {
   createSale,
   listAll,
   getSaleById,
   deleteSale,
+  updateSale,
 };
