@@ -4,13 +4,15 @@ const {
   getOneProduct,
   createProduct,
   updateProduct,
+  deleteProduct,
 } = require('../controllers/products.controller');
 
 const productsRouter = Router();
 
 productsRouter.route('/:id')
   .get(getOneProduct)
-  .put(updateProduct);
+  .put(updateProduct)
+  .delete(deleteProduct);
 
 // productsRouter.get('/:id', getOneProduct);
 // productsRouter.put('/:id', updateProduct);

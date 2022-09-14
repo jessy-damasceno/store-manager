@@ -161,7 +161,7 @@ describe("Verificando service Products", function () {
 
       const result = await productsService.deleteProduct(1);
 
-      expect(result).to.equal();
+      expect(result).to.deep.equal({ type: null, message: null });
     });
 
     it("retorna erro se produto não existir", async function () {

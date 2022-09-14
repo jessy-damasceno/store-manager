@@ -54,6 +54,8 @@ async function deleteProduct(productId) {
     return response;
   }
   await productsModel.deleteProduct(productId);
+
+  return { type: null, message: null };
 }
 
 module.exports = {
