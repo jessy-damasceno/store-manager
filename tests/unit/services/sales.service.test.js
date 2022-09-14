@@ -142,7 +142,7 @@ describe("Verificando service Sales", function () {
     });
   });
 
-  describe.only("Removendo uma venda do bando de dados", function () {
+  describe("Removendo uma venda do bando de dados", function () {
     afterEach(function () {
       sinon.restore();
     });

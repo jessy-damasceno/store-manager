@@ -87,43 +87,82 @@ describe("Verificando controller Sales", function () {
     });
   });
 
-describe("Listando uma venda", function () {
-  afterEach(function () {
-    sinon.restore();
+  describe("Listando uma venda", function () {
+    afterEach(function () {
+      sinon.restore();
+    });
+
+    it("é chamado o status com o código 200 e uma única venda", async function () {
+      sinon
+        .stub(salesService, "getSaleById")
+        .resolves({ type: null, message: saleById });
+
+      const req = { params: { id: 1 } };
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      await salesController.getOneSale(req, res);
+
+      expect(res.status.calledWith(200)).to.be.true;
+      expect(res.json.calledWith(saleById)).to.be.true;
+    });
+
+    it("é chamado o status com o código 404", async function () {
+      sinon
+        .stub(salesService, "getSaleById")
+        .resolves({ type: "SALE_NOT_FOUND", message: "Sale not found" });
+
+      const req = { params: { id: 99999 } };
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      await salesController.getOneSale(req, res);
+
+      expect(res.status.calledWith(404)).to.be.true;
+      expect(res.json.calledWith({ message: "Sale not found" })).to.be.true;
+    });
   });
 
-  it("é chamado o status com o código 200 e uma única venda", async function () {
-    sinon
-      .stub(salesService, "getSaleById")
-      .resolves({ type: null, message: saleById });
+  describe("Deletando uma venda", function () {
+    afterEach(function () {
+      sinon.restore();
+    });
 
-    const req = { params: { id: 1 } };
-    const res = {};
+    it("é chamado o status com o código 204", async function () {
+      sinon
+        .stub(salesService, "deleteSale")
+        .resolves({ type: null, message: null });
 
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
+      const req = { params: { id: 1 } };
+      const res = {};
 
-    await salesController.getOneSale(req, res);
+      res.sendStatus = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
 
-    expect(res.status.calledWith(200)).to.be.true;
-    expect(res.json.calledWith(saleById)).to.be.true;
+      await salesController.deleteSale(req, res);
+
+      expect(res.sendStatus.calledWith(204)).to.be.true;
+    });
+
+    it("é chamado o status com o código 404", async function () {
+      sinon
+        .stub(salesService, "deleteSale")
+        .resolves({ type: "SALE_NOT_FOUND", message: "Sale not found" });
+
+      const req = { params: { id: 99999 } };
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      await salesController.deleteSale(req, res);
+
+      expect(res.status.calledWith(404)).to.be.true;
+      expect(res.json.calledWith({ message: "Sale not found" })).to.be.true;
+    });
   });
-
-  it("é chamado o status com o código 404", async function () {
-    sinon
-      .stub(salesService, "getSaleById")
-      .resolves({ type: "SALE_NOT_FOUND", message: "Sale not found" });
-
-    const req = { params: { id: 99999 } };
-    const res = {};
-
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
-
-    await salesController.getOneSale(req, res);
-
-    expect(res.status.calledWith(404)).to.be.true;
-    expect(res.json.calledWith({ message: "Sale not found" })).to.be.true;
-  });
-});
 });
