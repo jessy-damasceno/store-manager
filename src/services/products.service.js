@@ -45,7 +45,15 @@ async function updateProduct({ id, name }) {
 
   const { result } = await productsModel.update({ name, id });
 
-  return { type: null, message: result }; 
+  return { type: null, message: result };
+}
+
+async function deleteProduct(productId) {
+  const response = await getProductById(productId);
+  if (response.type) {
+    return response;
+  }
+  await productsModel.deleteProduct(productId);
 }
 
 module.exports = {
@@ -53,4 +61,5 @@ module.exports = {
   getProductById,
   createProduct,
   updateProduct,
+  deleteProduct,
 };

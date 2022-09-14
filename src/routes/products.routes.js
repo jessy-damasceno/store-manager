@@ -8,10 +8,18 @@ const {
 
 const productsRouter = Router();
 
-productsRouter.get('/:id', getOneProduct);
-productsRouter.put('/:id', updateProduct);
+productsRouter.route('/:id')
+  .get(getOneProduct)
+  .put(updateProduct);
 
-productsRouter.get('/', listAllProducts);
-productsRouter.post('/', createProduct);
+// productsRouter.get('/:id', getOneProduct);
+// productsRouter.put('/:id', updateProduct);
+
+productsRouter.route('/')
+  .get(listAllProducts)
+  .post(createProduct);
+
+// productsRouter.get('/', listAllProducts);
+// productsRouter.post('/', createProduct);
 
 module.exports = productsRouter;

@@ -148,4 +148,31 @@ describe("Verificando service Products", function () {
       expect(result).to.deep.equal(NAME_REQUIRED_EXPECTED);
     });
   });
+
+  describe("Removendo um produto do bando de dados", function () {
+
+    afterEach(function () {
+      sinon.restore();
+    });
+
+    it("com sucesso", async function () {
+      sinon.stub(productsModel, "findById").resolves(productsList[0]);
+      sinon.stub(productsModel, "deleteProduct").resolves([{ affectedRows: 1 }]);
+
+      const result = await productsService.deleteProduct(1);
+
+      expect(result).to.equal();
+    });
+
+    it("retorna erro se produto não existir", async function () {
+      sinon.stub(productsModel, "findById").resolves(null);
+
+      const result = await productsService.deleteProduct(1);
+
+      expect(result).to.deep.equal({
+        type: "PRODUCT_NOT_FOUND",
+        message: "Product not found",
+      });
+    });
+  });
 });
