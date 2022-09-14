@@ -49,7 +49,7 @@ const deleteProduct = async (req, res) => {
     return res.status(mapError(type)).json({ message });
   }
 
-  return res.status(204);
+  return res.sendStatus(204);
 };
 
 module.exports = {

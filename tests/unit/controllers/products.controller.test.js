@@ -216,12 +216,12 @@ describe("Verificando controller Products", function () {
       const req = { params: { id: 1 } };
       const res = {};
 
-      res.status = sinon.stub().returns(res);
+      res.sendStatus = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
 
       await productsController.deleteProduct(req, res);
 
-      expect(res.status.calledWith(204)).to.be.true;
+      expect(res.sendStatus.calledWith(204)).to.be.true;
     });
 
     it("é chamado o status com o código 404", async function () {
