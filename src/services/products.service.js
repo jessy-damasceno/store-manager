@@ -58,10 +58,16 @@ async function deleteProduct(productId) {
   return { type: null, message: null };
 }
 
+async function getByQuery(query) {
+  const response = await productsModel.getByQuery(query);
+  return response;
+}
+
 module.exports = {
   listAll,
   getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
+  getByQuery,
 };

@@ -5,9 +5,12 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
+  getByQuery,
 } = require('../controllers/products.controller');
 
 const productsRouter = Router();
+
+productsRouter.get('/search', getByQuery);
 
 productsRouter.route('/:id')
   .get(getOneProduct)

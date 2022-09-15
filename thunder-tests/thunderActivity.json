@@ -1,0 +1,82 @@
+[
+  {
+    "_id": "09c88203-0b30-4b01-bdf7-beec132536f5",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/products/search?q=",
+    "url": "http://localhost:3000/products/search?q=",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-09-15T04:43:55.337Z",
+    "modified": "2022-09-15T04:44:26.498Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "q",
+        "value": "",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "d6fb155b-5669-4fe2-9510-8bf94f9fc240",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/products/search?q=traje",
+    "url": "http://localhost:3000/products/search?q=traje",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-09-15T04:44:04.276Z",
+    "modified": "2022-09-15T04:44:05.451Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "q",
+        "value": "traje",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "31248bc6-c0c7-4adb-9f07-7b605e3b4b63",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/products/search?q=Traje",
+    "url": "http://localhost:3000/products/search?q=Traje",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-09-15T04:44:11.511Z",
+    "modified": "2022-09-15T04:44:11.964Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "q",
+        "value": "Traje",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "e25c18e4-b322-4168-814d-56a31a4ff92a",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/products/search?q=a",
+    "url": "http://localhost:3000/products/search?q=a",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-09-15T04:44:19.219Z",
+    "modified": "2022-09-15T04:44:19.456Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "q",
+        "value": "a",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  }
+]
