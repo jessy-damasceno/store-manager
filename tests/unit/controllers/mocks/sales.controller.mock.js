@@ -6,6 +6,19 @@ const saleCreateResponse = {
   ],
 };
 
+const saleUpdated = {
+  saleId: 3,
+  itemsUpdated: [
+    { productId: 1, quantity: 1 },
+    { productId: 2, quantity: 5 },
+  ],
+};
+
+const saleUpdatedResponse = {
+  type: null,
+  message: saleUpdated,
+};
+
 const validBodyRequest = [
   {
     productId: 1,
@@ -50,4 +63,6 @@ module.exports = {
   validBodyRequest,
   salesList,
   saleById,
+  saleUpdatedResponse,
+  saleUpdated,
 };

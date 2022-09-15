@@ -10,6 +10,8 @@ const {
   validBodyRequest,
   salesList,
   saleById,
+  saleUpdatedResponse,
+  saleUpdated,
 } = require("./mocks/sales.controller.mock");
 
 describe("Verificando controller Sales", function () {
@@ -160,6 +162,46 @@ describe("Verificando controller Sales", function () {
       res.json = sinon.stub().returns();
 
       await salesController.deleteSale(req, res);
+
+      expect(res.status.calledWith(404)).to.be.true;
+      expect(res.json.calledWith({ message: "Sale not found" })).to.be.true;
+    });
+  });
+
+  describe("Atualizando uma venda", function () {
+    afterEach(function () {
+      sinon.restore();
+    });
+
+    it("é chamado o status com o código 200 e o retorno da venda modificada", async function () {
+      sinon
+        .stub(salesService, "updateSale")
+        .resolves(saleUpdatedResponse);
+
+      const req = { params: { id: 3 } };
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      await salesController.updateSale(req, res);
+
+      expect(res.status.calledWith(200)).to.be.true;
+      expect(res.json.calledWith(saleUpdated)).to.be.true;
+    });
+
+    it("é chamado o status com o código 404", async function () {
+      sinon
+        .stub(salesService, "updateSale")
+        .resolves({ type: "SALE_NOT_FOUND", message: "Sale not found" });
+
+      const req = { params: { id: 99999 } };
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      await salesController.updateSale(req, res);
 
       expect(res.status.calledWith(404)).to.be.true;
       expect(res.json.calledWith({ message: "Sale not found" })).to.be.true;
