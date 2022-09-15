@@ -14,6 +14,17 @@ const newSaleResponse = {
   },
 };
 
+const correctUpdateResponse = {
+  type: null,
+  message: {
+    saleId: 1,
+    itemsUpdated: [
+      { productId: 1, quantity: 1 },
+      { productId: 2, quantity: 5 },
+    ],
+  },
+};
+
 const missingProductId = [{ quantity: 1 }];
 
 const missingProductId2 = [{ productId: 1, quantity: 1 }, { quantity: 5 }];
@@ -107,4 +118,5 @@ module.exports = {
   INVALID_PRODUCT_ID_ERROR_MESSAGE,
   allSales,
   saleById,
+  correctUpdateResponse,
 };
