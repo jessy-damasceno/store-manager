@@ -105,4 +105,19 @@ describe("Testes de unidade do model de Produtos", function () {
       expect(response.affectedRows).to.equal(1);
     });
   });
+
+  describe("Busca produtos por searchTerm", function () {
+    before(async function () {
+      sinon.stub(connection, "execute").resolves([products]);
+    });
+
+    after(async function () {
+      connection.execute.restore();
+    });
+
+    it("com sucesso", async function () {
+      const response = await productsModel.getByQuery();
+      expect(response).to.equal(products);
+    });
+  });
 });
