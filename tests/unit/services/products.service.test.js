@@ -150,14 +150,15 @@ describe("Verificando service Products", function () {
   });
 
   describe("Removendo um produto do bando de dados", function () {
-
     afterEach(function () {
       sinon.restore();
     });
 
     it("com sucesso", async function () {
       sinon.stub(productsModel, "findById").resolves(productsList[0]);
-      sinon.stub(productsModel, "deleteProduct").resolves([{ affectedRows: 1 }]);
+      sinon
+        .stub(productsModel, "deleteProduct")
+        .resolves([{ affectedRows: 1 }]);
 
       const result = await productsService.deleteProduct(1);
 
@@ -173,6 +174,21 @@ describe("Verificando service Products", function () {
         type: "PRODUCT_NOT_FOUND",
         message: "Product not found",
       });
+    });
+  });
+
+  describe("Testando a função getByQuery", function () {
+    before(async function () {
+      sinon.stub(productsModel, "getByQuery").resolves(productsList);
+    });
+
+    after(async function () {
+      sinon.restore();
+    });
+
+    it("com sucesso", async function () {
+      const response = await productsService.getByQuery();
+      expect(response).to.equal(productsList);
     });
   });
 });
